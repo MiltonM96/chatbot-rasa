@@ -1,0 +1,37 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hola
+    - buenas
+    - buen día
+    - hola bot
+
+- intent: ask_weather
+  examples: |
+    - como esta el clima
+    - que temperatura hace
+    - quiero saber el clima
+    - va a llover
+
+- intent: inform_city
+  examples: |
+    - parana
+    - rosario
+    - buenos aires
+    - cordoba
+
+- intent: chitchat
+  examples: |
+    - jaja
+    - que haces
+    - sos humano
+    - estas ahi
+    - que onda
+
+- intent: goodbye
+  examples: |
+    - chau
+    - adios
+    - nos vemos
