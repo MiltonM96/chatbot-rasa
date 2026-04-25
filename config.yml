@@ -1,3 +1,9 @@
+# (Pipeline de Procesamiento) :
+# * Define los hiperparámetros y algoritmos de IA (tokenizadores, clasificadores como *DIETClassifier*).
+# * Configura cómo se procesará el texto durante la fase de entrenamiento.
+
+# -----------------------------------------------------------------------------
+
 # The config recipe.
 # https://rasa.com/docs/rasa/model-configuration/
 recipe: default.v1

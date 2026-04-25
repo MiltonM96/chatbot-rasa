@@ -1,37 +1,29 @@
+# (Datos de Entrenamiento) :
+# * Almacena ejemplos de frases para entrenar los modelos de clasificación.
+# * Ayuda al bot a identificar la intención real (*intent*) detrás de diversas formas de escribir.
+
+# -----------------------------------------------------------------------------
+
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hola
-    - buenas
-    - buen día
-    - hola bot
+  - intent: buscar_personaje
+    examples: |
+      - ¿cuánto [ki](atributo) tiene [Goku](nombre_personaje)?
+      - decime la [raza](atributo) de [Vegeta](nombre_personaje)
+      - ¿cuál es el [género](atributo) de [Freezer](nombre_personaje)?
+      - mostrame la [afiliación](atributo) de [Krillin](nombre_personaje)
+      - que [raza](atributo) tiene [piccolo](nombre_personaje)
+      - el personaje [piccolo](nombre_personaje) de que [raza](atributo) es?
+      - decime el [ki](atributo) de [Trunks](nombre_personaje)
+      - cuales son las [transformaciones](atributo) de [goku](nombre_personaje) 
 
-- intent: ask_weather
-  examples: |
-    - como esta el clima
-    - que temperatura hace
-    - quiero saber el clima
-    - va a llover
-
-- intent: inform_city
-  examples: |
-    - parana
-    - rosario
-    - buenos aires
-    - cordoba
-
-- intent: chitchat
-  examples: |
-    - jaja
-    - que haces
-    - sos humano
-    - estas ahi
-    - que onda
-
-- intent: goodbye
-  examples: |
-    - chau
-    - adios
-    - nos vemos
+  - intent: chitchat
+    examples: |
+      - ¿cómo estás?
+      - contame un chiste
+      - hace calor hoy
+      - ¿sos un robot?
+      - háblame de naves espaciales
+      - ¿cuántos capítulos tiene la serie?
+      - quiero ver el resumen del episodio uno

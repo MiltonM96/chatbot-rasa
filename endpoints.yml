@@ -1,3 +1,9 @@
+# Enrutamiento de Servicios) :
+# * Gestiona las conexiones entre el núcleo de Rasa y servicios externos.
+# * Especifica la ubicación del servidor de acciones personalizadas (Action Server).
+
+# -----------------------------------------------------------------------------
+
 # This file contains the different endpoints your bot can use.
 
 # Server where the models are pulled from.
