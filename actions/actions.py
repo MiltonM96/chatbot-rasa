@@ -44,20 +44,43 @@ class ActionConsultarDragonBall(Action):
 
             # 3. Lógica condicional de atributos normalizada
             if atributo:
-                diccionario_atributos = {
-                    "ki": "ki",
-                    "raza": "race",
-                    "género": "gender",
-                    "afiliación": "affiliation",
-                    "transformaciones": "transformations"
-                }
-                clave = diccionario_atributos.get(atributo.lower())
+                atributo_normalizado = atributo.lower().replace("ú", "u").replace("ó", "o")
+
+                # Lógica para múltiples transformaciones
+                if atributo_normalizado in ["transformaciones", "transformacion"]:
+                    lista_transf = personaje_completo.get("transformations", [])
+                    if lista_transf:
+                        nombres = [t.get("name") for t in lista_transf]
+                        nombres_unidos = ", ".join(nombres)
+                        dispatcher.utter_message(text=f"Las transformaciones de {nombre} son: {nombres_unidos}.")
+                    else:
+                        dispatcher.utter_message(text=f"{nombre} no tiene transformaciones registradas.")
                 
-                if clave and clave in personaje_completo:
-                    valor = personaje_completo[clave]
-                    dispatcher.utter_message(text=f"El/la {atributo} de {nombre} es: {valor}.")
+                # Lógica para la última transformación
+                elif atributo_normalizado in ["ultima transformacion"]:
+                    lista_transf = personaje_completo.get("transformations", [])
+                    if lista_transf:
+                        # Selecciona el último elemento de la lista con [-1]
+                        ultima = lista_transf[-1].get("name")
+                        dispatcher.utter_message(text=f"La última transformación de {nombre} es: {ultima}.")
+                    else:
+                        dispatcher.utter_message(text=f"{nombre} no tiene transformaciones registradas.")
+                
+                # Lógica estándar para atributos simples (raza, ki, etc.)
                 else:
-                    dispatcher.utter_message(text=f"El dato '{atributo}' no está disponible para este personaje.")
+                    diccionario_atributos = {
+                        "ki": "ki",
+                        "raza": "race",
+                        "genero": "gender",
+                        "afiliacion": "affiliation"
+                    }
+                    clave = diccionario_atributos.get(atributo_normalizado)
+                    
+                    if clave and clave in personaje_completo:
+                        valor = personaje_completo[clave]
+                        dispatcher.utter_message(text=f"El/la {atributo} de {nombre} es: {valor}.")
+                    else:
+                        dispatcher.utter_message(text=f"El dato '{atributo}' no está disponible para este personaje.")
             else:
                 descripcion = personaje_completo.get("description", "Sin descripción.")
                 dispatcher.utter_message(text=f"Datos de {nombre}: {descripcion}")

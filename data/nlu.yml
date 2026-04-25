@@ -3,12 +3,20 @@
 # * Ayuda al bot a identificar la intención real (*intent*) detrás de diversas formas de escribir.
 
 # -----------------------------------------------------------------------------
-
 version: "3.1"
 
 nlu:
+  # 1. Bloque Regex: Extrae cualquier palabra de la A a la Z
+  - regex: nombre_personaje
+    examples: |
+      - [a-zA-Z]+
+
+  # 2. Plantillas de oraciones (Se incluyen búsquedas genéricas y por atributo)
   - intent: buscar_personaje
     examples: |
+      - buscame información de [Goku](nombre_personaje)
+      - ¿quién es [Vegeta](nombre_personaje)?
+      - ¿quien es [Yamcha](nombre_personaje)?
       - ¿cuánto [ki](atributo) tiene [Goku](nombre_personaje)?
       - decime la [raza](atributo) de [Vegeta](nombre_personaje)
       - ¿cuál es el [género](atributo) de [Freezer](nombre_personaje)?
@@ -16,8 +24,13 @@ nlu:
       - que [raza](atributo) tiene [piccolo](nombre_personaje)
       - el personaje [piccolo](nombre_personaje) de que [raza](atributo) es?
       - decime el [ki](atributo) de [Trunks](nombre_personaje)
-      - cuales son las [transformaciones](atributo) de [goku](nombre_personaje) 
+      - que [transformaciones](atributo) tiene [goku](nombre_personaje)
+      - decime las [transformaciones](atributo) de [Vegeta](nombre_personaje)
+      - cual es la [ultima transformacion](atributo) de [goku](nombre_personaje)
+      - mostrame la [última transformación](atributo) de [Freezer](nombre_personaje)
+      - cuales son las [transformaciones](atributo) de [bulma](nombre_personaje)
 
+      
   - intent: chitchat
     examples: |
       - ¿cómo estás?
