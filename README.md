@@ -8,8 +8,8 @@
     <th>2. Consulta a la API</th>
   </tr>
   <tr>
-    <td><img src="image-1.png" width="450px" /></td>
-    <td><img src="image.png" width="450px" /></td>
+    <td><img src="imagenes_pruebas/saludo_inicial.png" width="450px" /></td>
+    <td><img src="imagenes_pruebas/consulta_api.png" width="450px" /></td>
   </tr>
 </table>
 
@@ -19,8 +19,8 @@
     <th>4. Chitchat</th>
   </tr>
   <tr>
-    <td><img src="image-2.png" width="450px" /></td>
-    <td><img src="image-3.png" width="450px" /></td>
+    <td><img src="imagenes_pruebas/respuesta_api_y_no_input.png" width="450px" /></td>
+    <td><img src="imagenes_pruebas/chitchat.png" width="450px" /></td>
   </tr>
 </table>
 
@@ -72,19 +72,13 @@ rasa --version
 
 ### 1️⃣ Abrir la primera consola
 
-Activar el entorno virtual:
+
+Entrenar modelo:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
+rasa train
 ```
 
-> Los siguientes comandos son específicos de mi PC:
-
-```powershell
-Remove-Item Env:CURL_CA_BUNDLE -ErrorAction SilentlyContinue
-
-Remove-Item Env:REQUESTS_CA_BUNDLE -ErrorAction SilentlyContinue
-```
 
 Ejecutar las acciones de Rasa:
 
