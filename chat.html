@@ -298,6 +298,8 @@
     let pollingInterval = null;
     let timerInterval = null;
     let timerStart = null;
+    let inactivityTimeout = null;   // Timer principal del frontend
+    let inactivityFired = false;    // Bandera anti-duplicados
 
     function getTime() {
       return new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
@@ -346,7 +348,37 @@
       timerFill.style.width = '0%';
     }
 
-    // --- Polling para detectar mensajes del reminder ---
+    // --- Disparar mensaje de inactividad (una sola vez) ---
+    function fireInactivity() {
+      if (inactivityFired) return; // Evitar duplicados
+      inactivityFired = true;
+      clearTimeout(inactivityTimeout);
+      stopTimer();
+      stopPolling();
+      addMessage('Debido a la falta de respuesta por ' + INACTIVITY_SECONDS + ' Segundos, cerraré la conversación. ¡Hasta pronto!', 'bot', true);
+    }
+
+    // --- Iniciar timer de inactividad (frontend como mecanismo principal) ---
+    function startInactivityCountdown() {
+      clearTimeout(inactivityTimeout);
+      inactivityFired = false;
+
+      startTimerVisual();
+      startPolling();
+
+      // Timer principal: setTimeout del frontend (siempre funciona)
+      inactivityTimeout = setTimeout(fireInactivity, INACTIVITY_SECONDS * 1000);
+    }
+
+    // --- Cancelar toda la lógica de inactividad ---
+    function cancelInactivity() {
+      clearTimeout(inactivityTimeout);
+      inactivityFired = false;
+      stopTimer();
+      stopPolling();
+    }
+
+    // --- Polling como respaldo para detectar reminders del servidor ---
     function startPolling() {
       stopPolling();
       pollingInterval = setInterval(async () => {
@@ -355,17 +387,14 @@
           const tracker = await res.json();
           const events = tracker.events || [];
 
-          // Buscar eventos bot nuevos desde el último check
           if (events.length > lastEventCount) {
             const newEvents = events.slice(lastEventCount);
             for (const evt of newEvents) {
               if (evt.event === 'bot' && evt.text) {
-                // Verificar si es el mensaje de inactividad
                 const isReminder = evt.text.includes('inactividad') || evt.text.includes('falta de respuesta');
-                addMessage(evt.text, 'bot', isReminder);
                 if (isReminder) {
-                  stopTimer();
-                  stopPolling();
+                  // El servidor disparó el reminder antes que el frontend → usar ese
+                  fireInactivity();
                 }
               }
             }
@@ -389,10 +418,7 @@
       addMessage(text, 'user');
       userInput.value = '';
       showTyping(true);
-      stopTimer();
-      stopPolling();
-      clearTimeout(welcomeTimeout);
-      welcomeTimeout = null;
+      cancelInactivity();
 
       try {
         const res = await fetch(`${RASA_URL}/webhooks/rest/webhook`, {
@@ -407,7 +433,6 @@
         if (data && data.length > 0) {
           for (const msg of data) {
             if (msg.text) {
-              // Filtrar mensajes de inactividad del webhook (se muestran solo por polling)
               const esInactividad = msg.text.includes('inactividad') || msg.text.includes('falta de respuesta');
               if (!esInactividad) {
                 addMessage(msg.text, 'bot');
@@ -416,27 +441,19 @@
           }
         }
 
-        // Esperar 2 segundos para que cualquier reminder pendiente se procese en Rasa
-        // antes de sincronizar (evita race condition entre API call y reminder viejo)
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // Actualizar el conteo de eventos para que el polling no duplique
+        // Sincronizar eventos del tracker
         const trackerRes = await fetch(`${RASA_URL}/conversations/${SENDER_ID}/tracker`);
         const tracker = await trackerRes.json();
         lastEventCount = (tracker.events || []).length;
 
-        // Iniciar timer visual y polling
-        startTimerVisual();
-        startPolling();
+        // Iniciar countdown de inactividad
+        startInactivityCountdown();
 
       } catch (e) {
         showTyping(false);
         addMessage('Error de conexión con el servidor Rasa. ¿Está corriendo?', 'bot', true);
       }
     }
-
-    // --- Timer de bienvenida (solo frontend, sin Rasa) ---
-    let welcomeTimeout = null;
 
     sendBtn.addEventListener('click', sendMessage);
     userInput.addEventListener('keydown', (e) => {
@@ -459,17 +476,14 @@
             if (msg.text) addMessage(msg.text, 'bot');
           }
         }
-        // Sincronizar eventos (sin polling, el timer de bienvenida es solo frontend)
+
+        // Sincronizar eventos del tracker
         const trackerRes = await fetch(`${RASA_URL}/conversations/${SENDER_ID}/tracker`);
         const tracker = await trackerRes.json();
         lastEventCount = (tracker.events || []).length;
 
-        // Timer visual + timeout frontend para inactividad en la bienvenida
-        startTimerVisual();
-        welcomeTimeout = setTimeout(() => {
-          stopTimer();
-          addMessage('Debido a la falta de respuesta por ' + INACTIVITY_SECONDS + ' Segundos, cerraré la conversación. ¡Hasta pronto!', 'bot', true);
-        }, INACTIVITY_SECONDS * 1000);
+        // Iniciar countdown de inactividad (mismo mecanismo para todos los casos)
+        startInactivityCountdown();
       } catch (e) {
         showTyping(false);
         addMessage('Error de conexión con el servidor Rasa. ¿Está corriendo?', 'bot', true);

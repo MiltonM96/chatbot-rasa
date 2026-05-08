@@ -16,6 +16,7 @@ rules:
     steps:
       - intent: saludar
       - action: utter_bienvenida
+      - action: action_programar_inactividad
 
   - rule: Consultar API de Dragon Ball y reiniciar timer
     steps:
