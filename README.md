@@ -1,4 +1,6 @@
-# Chatbot Dragon Ball - TP2 IA 2026 - Martin Milton, Andrian Alexis, Pasutti Tomas, Arrua Leonel.
+# Chatbot Dragon Ball - TP2 IA 2026
+
+## GRUPO E - Martin Milton, Andrian Alexis, Pasutti Tomas, Arrua Leonel
 
 <table align="center">
   <tr>
