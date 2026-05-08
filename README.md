@@ -1,5 +1,128 @@
 # chatbot-rasa
 
+## 📦 Instalación inicial
+
+> Estos pasos son necesarios únicamente la primera vez que se descarga el proyecto.
+
+### 1️⃣ Crear entorno virtual
+
+```powershell
+py -3.10 -m venv .venv
+```
+
+---
+
+### 2️⃣ Activar entorno virtual
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+---
+
+### 3️⃣ Actualizar pip
+
+```powershell
+python -m pip install --upgrade pip
+```
+
+---
+
+### 4️⃣ Instalar dependencias
+
+```powershell
+python -m pip install rasa rasa-sdk requests
+```
+
+---
+
+### 5️⃣ Verificar instalación de Rasa
+
+```powershell
+rasa --version
+```
+
+---
+
+## 🚀 Pasos para ejecutar el bot
+
+### 1️⃣ Abrir la primera consola
+
+Activar el entorno virtual:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Ingresar a la carpeta del proyecto:
+
+```powershell
+cd .\y\
+```
+
+> Los siguientes comandos son específicos de mi PC:
+
+```powershell
+Remove-Item Env:CURL_CA_BUNDLE -ErrorAction SilentlyContinue
+
+Remove-Item Env:REQUESTS_CA_BUNDLE -ErrorAction SilentlyContinue
+```
+
+Ejecutar las acciones de Rasa:
+
+```powershell
+rasa run actions
+```
+
+---
+
+### 2️⃣ Abrir una segunda consola
+
+Ejecutar el servidor principal de Rasa:
+
+```powershell
+rasa run --enable-api --cors "*"
+```
+
+---
+
+### 3️⃣ Abrir la interfaz web
+
+Desde la carpeta `chatbot\y`, ejecutar:
+
+```powershell
+start chat.html
+```
+
+Esto abrirá el chatbot en el navegador.
+
+---
+
+# 🔄 Qué hacer si modificás archivos
+
+| Archivo modificado | Acción necesaria |
+|---|---|
+| `nlu.yml` | `rasa train` |
+| `rules.yml` | `rasa train` |
+| `domain.yml` | `rasa train` |
+| `actions.py` | Reiniciar `rasa run actions` |
+
+---
+
+## ⚠️ Importante
+
+Si modificaste `domain.yml` y agregaste una acción nueva:
+
+```powershell
+rasa train
+```
+
+y después reiniciá:
+
+```powershell
+rasa run actions
+```
+
 <br>
 
 ## ¿Qué es Rasa?
@@ -57,14 +180,3 @@
 * **Estabilidad:** Evita bloqueos en la interfaz de usuario ante latencias o errores en servicios externos.
 
 <br>
-
-## Pasos para ejecutar el Bot
-
-### `Entrenar el modelo`: rasa train
-* Aguarde hasta que el proceso finalice y la consola indique que un nuevo modelo ha sido empaquetado y guardado exitosamente.
-
-### `Iniciar el servidor de acciones (Action Server)`: rasa run actions
-* La terminal quedará en ejecución continua y mostrará un mensaje indicando que el servidor está escuchando en el puerto 5055.
-
-### `Iniciar la interfaz de chat`: rasa shell
-* Cuando aparezca el prompt Your input ->, el sistema estará listo. Puede proceder a escribir "conectar a la api" para evaluar el requerimiento de red, "hace calor hoy" para verificar la interrupción por chit-chat, o esperar 60 segundos sin ingresar texto para comprobar el cumplimiento de la regla de no-input.

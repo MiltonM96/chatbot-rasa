@@ -35,10 +35,10 @@ slots:
 # 4. Respuestas estáticas
 responses:
   utter_chitchat:
-    - text: "Solo soy un bot enfocado en mi tarea. ¿Podemos volver a los datos de la API?"
+    - text: "Soy un bot enfocado en Dragon Ball, no tengo información sobre temas generales. ¿Te puedo ayudar con alguna consulta sobre la API?"
   
   utter_despedida_inactividad:
-    - text: "Debido a la falta de respuesta por 60 segundos, cerraré la conversación. ¡Hasta pronto!"
+    - text: "Debido a la falta de respuesta por 10 Segundos, cerraré la conversación. ¡Hasta pronto!"
 
 # 5. Listado de lógica personalizada
 actions:

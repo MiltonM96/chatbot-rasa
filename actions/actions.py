@@ -86,6 +86,7 @@ class ActionConsultarDragonBall(Action):
                 dispatcher.utter_message(text=f"Datos de {nombre}: {descripcion}")
 
         except Exception as e:
+            print("ERROR DRAGONBALL:", e)
             dispatcher.utter_message(text="Error interno al procesar la API.")
 
         # 4. Limpiar memoria obligatoriamente para consultas futuras
@@ -97,8 +98,8 @@ class ActionProgramarInactividad(Action):
         return "action_programar_inactividad"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        # Calcular fecha límite agregando 60 segundos al reloj actual
-        fecha_desconexion = datetime.datetime.now() + datetime.timedelta(seconds=60)
+        # Calcular fecha límite agregando 10 Segundos al reloj actual
+        fecha_desconexion = datetime.datetime.now() + datetime.timedelta(seconds=10)
         
         # Generar evento interno
         reminder = ReminderScheduled(
