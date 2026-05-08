@@ -11,7 +11,24 @@ nlu:
     examples: |
       - [a-zA-Z]+
 
-  # 2. Plantillas de oraciones (Se incluyen búsquedas genéricas y por atributo)
+  # 2. Saludos
+  - intent: saludar
+    examples: |
+      - hola
+      - buenas
+      - buenas tardes
+      - buenas noches
+      - buenos días
+      - buen día
+      - qué tal
+      - hey
+      - hola, ¿cómo estás?
+      - hola bot
+      - hola dragon ball bot
+      - buenas, necesito ayuda
+      - hola, quiero consultar algo
+
+  # 3. Plantillas de oraciones (Se incluyen búsquedas genéricas y por atributo)
   - intent: buscar_personaje
     examples: |
       - buscame información de [Goku](nombre_personaje)
@@ -30,7 +47,7 @@ nlu:
       - mostrame la [última transformación](atributo) de [Freezer](nombre_personaje)
       - cuales son las [transformaciones](atributo) de [bulma](nombre_personaje)
 
-      
+  # 4. Mensajes fuera de tema (no relacionados con la API)
   - intent: chitchat
     examples: |
       - ¿cómo estás?
@@ -40,3 +57,32 @@ nlu:
       - háblame de naves espaciales
       - ¿cuántos capítulos tiene la serie?
       - quiero ver el resumen del episodio uno
+      - cuánto sale una pizza
+      - qué hora es
+      - me ayudas con la tarea de matemáticas
+      - quién ganó el mundial
+      - hablame del clima
+      - cuál es tu color favorito
+      - sabés programar en python
+      - cuánto es 2 + 2
+      - me aburro
+      - decime algo gracioso
+      - jugamos un juego
+      - qué opinás de naruto
+      - contame algo interesante
+      - tengo hambre
+      - me recomendás una película
+      - a qué te dedicas
+      - esto es una prueba
+      - estoy probando el chat
+      - aaaa
+      - asdf
+      - jajaja
+      - ???
+      - no entiendo nada
+      - qwerty
+      - blablabla
+      - test
+      - lalala
+      - xd
+      - lol

@@ -12,16 +12,28 @@
 version: "3.1"
 
 rules:
+  - rule: Saludo inicial
+    steps:
+      - intent: saludar
+      - action: utter_bienvenida
+
   - rule: Consultar API de Dragon Ball y reiniciar timer
     steps:
       - intent: buscar_personaje
       - action: action_consultar_dragonball
       - action: action_programar_inactividad
 
-  - rule: Manejar interrupciones
+  - rule: Manejar interrupciones y reiniciar timer
     steps:
       - intent: chitchat
       - action: utter_chitchat
+      - action: action_programar_inactividad
+
+  - rule: Consulta no entendida y reiniciar timer
+    steps:
+      - intent: nlu_fallback
+      - action: utter_fallback
+      - action: action_programar_inactividad
 
   - rule: Cerrar sesión por inactividad
     steps:

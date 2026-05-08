@@ -1,4 +1,26 @@
-# chatbot-rasa
+# Chatbot Dragon Ball - TP2 IA 2026
+
+<table align="center">
+  <tr>
+    <th>1. Saludo inicial</th>
+    <th>2. Consulta a la API</th>
+  </tr>
+  <tr>
+    <td><img src="image-1.png" width="450px" /></td>
+    <td><img src="image.png" width="450px" /></td>
+  </tr>
+</table>
+
+<table align="center">
+  <tr>
+    <th>3. Respuesta de la API y No-Input</th>
+    <th>4. Chitchat</th>
+  </tr>
+  <tr>
+    <td><img src="image-2.png" width="450px" /></td>
+    <td><img src="image-3.png" width="450px" /></td>
+  </tr>
+</table>
 
 ## 📦 Instalación inicial
 
@@ -31,7 +53,7 @@ python -m pip install --upgrade pip
 ### 4️⃣ Instalar dependencias
 
 ```powershell
-python -m pip install rasa rasa-sdk requests
+pip install -r requirements.txt
 ```
 
 ---
@@ -52,12 +74,6 @@ Activar el entorno virtual:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
-```
-
-Ingresar a la carpeta del proyecto:
-
-```powershell
-cd .\y\
 ```
 
 > Los siguientes comandos son específicos de mi PC:
@@ -94,7 +110,7 @@ Desde la carpeta `chatbot\y`, ejecutar:
 start chat.html
 ```
 
-Esto abrirá el chatbot en el navegador.
+Esto abrirá el chatbot en el navegador. La otra forma de hacerlo es abriendo el archivo `chat.html` con doble click.
 
 ---
 
