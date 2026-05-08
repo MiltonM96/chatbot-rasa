@@ -1,31 +1,46 @@
+# (Registro de Componentes) :
+# * Funciona como el inventario central o manifiesto del sistema.
+# * Declara intenciones, acciones y plantillas de respuesta (*utterances*) que el bot puede utilizar.
+
+# -----------------------------------------------------------------------------
+
 version: "3.1"
 
+# 1. Registrar intenciones
 intents:
-  - greet
-  - ask_weather
-  - inform_city
+  - buscar_personaje
   - chitchat
-  - goodbye
+  - EXTERNAL_no_input
 
+# 2. Registrar etiquetas de extracción
+entities:
+  - nombre_personaje
+  - atributo
+
+# 3. Configurar memoria (Slots)
+slots:
+  nombre_personaje:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: nombre_personaje
+  atributo:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: atributo
+
+# 4. Respuestas estáticas
 responses:
-  utter_greet:
-    - text: "Hola! Soy un chatbot de clima. ¿Qué ciudad querés consultar?"
-
-  utter_ask_city:
-    - text: "Decime la ciudad para consultar el clima."
-
-  utter_goodbye:
-    - text: "Chau! Cuando quieras volvemos a hablar."
-
   utter_chitchat:
-    - text: "Puedo charlar 😄 pero mi función principal es decirte el clima. ¿Qué ciudad querés?"
+    - text: "Soy un bot enfocado en Dragon Ball, no tengo información sobre temas generales. ¿Te puedo ayudar con alguna consulta sobre la API?"
+  
+  utter_despedida_inactividad:
+    - text: "Debido a la falta de respuesta por 10 Segundos, cerraré la conversación. ¡Hasta pronto!"
 
-  utter_out_of_scope:
-    - text: "Por ahora solo puedo ayudarte con el clima."
-
+# 5. Listado de lógica personalizada
 actions:
-  - action_get_weather
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  - action_consultar_dragonball
+  - action_programar_inactividad

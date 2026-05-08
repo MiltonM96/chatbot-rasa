@@ -1,37 +1,42 @@
+# (Datos de Entrenamiento) :
+# * Almacena ejemplos de frases para entrenar los modelos de clasificación.
+# * Ayuda al bot a identificar la intención real (*intent*) detrás de diversas formas de escribir.
+
+# -----------------------------------------------------------------------------
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hola
-    - buenas
-    - buen día
-    - hola bot
+  # 1. Bloque Regex: Extrae cualquier palabra de la A a la Z
+  - regex: nombre_personaje
+    examples: |
+      - [a-zA-Z]+
 
-- intent: ask_weather
-  examples: |
-    - como esta el clima
-    - que temperatura hace
-    - quiero saber el clima
-    - va a llover
+  # 2. Plantillas de oraciones (Se incluyen búsquedas genéricas y por atributo)
+  - intent: buscar_personaje
+    examples: |
+      - buscame información de [Goku](nombre_personaje)
+      - ¿quién es [Vegeta](nombre_personaje)?
+      - ¿quien es [Yamcha](nombre_personaje)?
+      - ¿cuánto [ki](atributo) tiene [Goku](nombre_personaje)?
+      - decime la [raza](atributo) de [Vegeta](nombre_personaje)
+      - ¿cuál es el [género](atributo) de [Freezer](nombre_personaje)?
+      - mostrame la [afiliación](atributo) de [Krillin](nombre_personaje)
+      - que [raza](atributo) tiene [piccolo](nombre_personaje)
+      - el personaje [piccolo](nombre_personaje) de que [raza](atributo) es?
+      - decime el [ki](atributo) de [Trunks](nombre_personaje)
+      - que [transformaciones](atributo) tiene [goku](nombre_personaje)
+      - decime las [transformaciones](atributo) de [Vegeta](nombre_personaje)
+      - cual es la [ultima transformacion](atributo) de [goku](nombre_personaje)
+      - mostrame la [última transformación](atributo) de [Freezer](nombre_personaje)
+      - cuales son las [transformaciones](atributo) de [bulma](nombre_personaje)
 
-- intent: inform_city
-  examples: |
-    - parana
-    - rosario
-    - buenos aires
-    - cordoba
-
-- intent: chitchat
-  examples: |
-    - jaja
-    - que haces
-    - sos humano
-    - estas ahi
-    - que onda
-
-- intent: goodbye
-  examples: |
-    - chau
-    - adios
-    - nos vemos
+      
+  - intent: chitchat
+    examples: |
+      - ¿cómo estás?
+      - contame un chiste
+      - hace calor hoy
+      - ¿sos un robot?
+      - háblame de naves espaciales
+      - ¿cuántos capítulos tiene la serie?
+      - quiero ver el resumen del episodio uno

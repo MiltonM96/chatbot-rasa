@@ -1,3 +1,9 @@
+# (Pipeline de Procesamiento) :
+# * Define los hiperparámetros y algoritmos de IA (tokenizadores, clasificadores como *DIETClassifier*).
+# * Configura cómo se procesará el texto durante la fase de entrenamiento.
+
+# -----------------------------------------------------------------------------
+
 # The config recipe.
 # https://rasa.com/docs/rasa/model-configuration/
 recipe: default.v1
@@ -10,7 +16,7 @@ assistant_id: 20260418-124942-tart-bintree
 # https://rasa.com/docs/rasa/nlu/components/
 language: es
 
-pipeline: null
+# pipeline: null
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
 # # If you'd like to customize it, uncomment and adjust the pipeline.
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
@@ -32,6 +38,16 @@ pipeline: null
 #   - name: FallbackClassifier
 #     threshold: 0.3
 #     ambiguity_threshold: 0.1
+
+pipeline:
+  # ... (otros componentes)
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: RegexEntityExtractor      # Agregado para forzar extracción
+    use_lookup_tables: True
+  - name: DIETClassifier
+    epochs: 100
+    constrain_similarities: true
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
